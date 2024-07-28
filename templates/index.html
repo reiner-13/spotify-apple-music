@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        {% block title %}
+
+        {% endblock %}
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <div class="header">
+            {% block header %}
+
+            {% endblock %}
+        </div>
+        <div class="navbar">
+            <a href="{{ url_for('home') }}">HOME</a>
+            <a href="{{ url_for('profile') }}">PROFILE</a>
+            <a class="right-navbar" href="{{ url_for('home') }}">LOG IN</a>
+            {% block navbar %}{% endblock %}
+        </div>
+        {% block body %}
+
+        {% endblock %}
+    </body>
+</html>
