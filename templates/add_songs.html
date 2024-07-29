@@ -13,12 +13,25 @@
 
 <div id="main-body">
     <h2>{{ playlist_name }}</h2>
-    <form id="create-playlist-form" method="GET" autocomplete="off">
+    <form id="search-songs-form" method="GET" autocomplete="off">
         <h4>Add Songs:</h4>
         <input class="form-box" type="text" name="song_search" placeholder="Search...">
-        <input class="text-box-submit" type="image" href=" {{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/768px-Search_Icon.svg.png" alt="Search Song">
+        <input class="text-box-submit" type="image" href="{{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/768px-Search_Icon.svg.png" alt="Search Song">
     </form>
     <br><br><br><hr>
+    <form id="add-songs-form" method="POST">
+        <ul>
+        {% for song in search_results["tracks"]["items"] %}
+            <img class="album-art" src="{{ song['album']['images'][1]['url'] }}" alt="{{ song['album']['name'] }} album cover">
+            <div class="song-desc">
+                Song: {{ song['name'] }}<br>
+                Artist: {{ song['artists'][0]['name'] }}<br>
+                Album: {{ song['album']['name'] }}<br>
+            </div>
+            <br><br><br><br><br><br><br><hr>
+        {% endfor %}
+        </ul>
+    </form>
 
 </div>
 

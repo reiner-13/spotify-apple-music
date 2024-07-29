@@ -28,9 +28,6 @@ sp = Spotify(auth_manager=sp_oauth)
 
 @app.route("/")
 def home():
-    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
-        auth_url = sp_oauth.get_authorize_url()
-        return redirect(auth_url)
     return render_template("home.html")
 
 
@@ -52,14 +49,10 @@ def add_songs(playlist_name):
         return redirect(auth_url)
     if request.method == 'GET':
         data = request.args
-        search_text = data.get("song_search")
-        if search_text != "" or search_text is not None:
-            q = f"track:{search_text}"
-            search_results = sp.search(q=q, limit=10, type="track")
-            for idx, track in enumerate(search_results["tracks"]["items"]):
-                track_id = search_results["tracks"]["items"][idx]["uri"]
-                print(idx, track['name'],  track['artists'][0]['name'], track['album']['name'], track_id)
-    return render_template("add_songs.html", playlist_name=playlist_name)
+        search_text = data.get("song_search") if data.get("song_search") is not None else "roundabout" # else "": this is default value, could personalize based off other playlists or something
+        search_results = sp.search(q=search_text, limit=10, type="track")
+        #track_id = search_results["tracks"]["items"][idx]["uri"]
+    return render_template("add_songs.html", playlist_name=playlist_name, search_results=search_results)
 
 
 @app.route("/logout")
