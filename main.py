@@ -40,24 +40,26 @@ def callback():
     return redirect(url_for("home"))
 
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def profile():
     return render_template("profile.html")
 
 
-@app.route("/create_playlists")
-def create_playlists():
-    return render_template("create_playlists.html")
-
-
-@app.route("/share_playlists")
-def share_playlists():
-
-    playlists = sp.current_user_playlists()
-    playlists_info = [(pl["name"], pl["external_urls"]["spotify"]) for pl in playlists["items"]]
-    playlists_html = "<br>".join([f"{name}: {url}" for name, url in playlists_info])
-
-    return playlists_html
+@app.route("/<playlist_name>/add_songs", methods=['GET'])
+def add_songs(playlist_name):
+    if not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        auth_url = sp_oauth.get_authorize_url()
+        return redirect(auth_url)
+    if request.method == 'GET':
+        data = request.args
+        search_text = data.get("song_search")
+        if search_text != "" or search_text is not None:
+            q = f"track:{search_text}"
+            search_results = sp.search(q=q, limit=10, type="track")
+            for idx, track in enumerate(search_results["tracks"]["items"]):
+                track_id = search_results["tracks"]["items"][idx]["uri"]
+                print(idx, track['name'],  track['artists'][0]['name'], track['album']['name'], track_id)
+    return render_template("add_songs.html", playlist_name=playlist_name)
 
 
 @app.route("/logout")

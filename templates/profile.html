@@ -10,15 +10,24 @@
 {% endblock %}
 
 {% block navbar %}
-<a class="right-navbar" href="{{ url_for('profile') }}">SETTINGS</a>
+<a class="right-navbar" href="{{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}">SETTINGS</a>
 {% endblock %}
 
 {% block body %}
 
 <div id="main-body">
-    <a id="add-playlist-button" href="{{ url_for('create_playlists') }}">
-        Create New Playlist <img src="https://cdn.icon-icons.com/icons2/1875/PNG/512/plussquare_120280.png" alt="Add Playlist">
-    </a>
+    <form id="create-playlist-form" method="POST" autocomplete="off">
+        <h4>Create New Playlist:</h4>
+        <input class="form-box" type="text" name="playlist_name" placeholder="Name...">
+        <input class="text-box-submit" type="image" src="https://cdn.icon-icons.com/icons2/1875/PNG/512/plussquare_120280.png" alt="Create Playlist">
+    </form>
+    <br><br><br><hr>
+
+    <form id="view-playlists-form" method="GET">
+
+    </form>
+
+    
 </div>
 
 {% endblock %}

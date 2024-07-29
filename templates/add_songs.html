@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Add Songs</title>
+{% endblock %}
+
+{% block header %}
+<h1>Add Songs</h1>
+<h4>Add songs to shared music playlists.</h4>
+{% endblock %}
+
+{% block body %}
+
+<div id="main-body">
+    <h2>{{ playlist_name }}</h2>
+    <form id="create-playlist-form" method="GET" autocomplete="off">
+        <h4>Add Songs:</h4>
+        <input class="form-box" type="text" name="song_search" placeholder="Search...">
+        <input class="text-box-submit" type="image" href=" {{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/768px-Search_Icon.svg.png" alt="Search Song">
+    </form>
+    <br><br><br><hr>
+
+</div>
+
+{% endblock %}
