@@ -1,0 +1,6 @@
+FLASK_APP=sam.py
+CLIENT_SECRET="28d55e3e086346d49b0866fb83293676"
+MYSQL_HOST="localhost"
+MYSQL_USER="root"
+MYSQL_PASSWORD="reinerj21"
+MYSQL_DB="spotifyapplemusic"
