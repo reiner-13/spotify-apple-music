@@ -41,13 +41,16 @@ a.right-navbar {
 #main-body {
     margin: 75px 25px;
 }
+#create-playlist-form h4 {
+    margin-bottom: 10px;
+}
 .text-box-submit {
     float: left;
     height: 40px;
     width: 40px;
 }
 #search-songs-form h4 {
-    margin: 0;
+    margin-bottom: 10px;
 }
 .form-box {
     display: flex;
@@ -62,11 +65,34 @@ a.right-navbar {
     font-family: Verdana;
     font-size: 16px;
 }
-.album-art {
+.song-item {
+    display: flex;
+}
+.album-art img, .album-art {
     height: 125px;
     width: 125px;
     float: left;
 }
 .song-desc {
+    height: 125px;
+    max-width: 50%;
+    margin: 10px;
+}
+#search-text {
+    color: rgb(121, 121, 121);
+}
+hr {
+    width: 50%;
+    margin-left: 0;
+}
+.add-button {
+    height: 25px;
+    font-family: Verdana;
+    font-weight: bold;
+    margin: 10px;
+}
+.form-label {
+    display: flex;
+    align-items: center;
     float: left;
 }

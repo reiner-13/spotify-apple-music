@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Log In</title>
+{% endblock %}
+
+{% block header %}
+<h1>Log In</h1>
+<h4>Enter account information to get started.</h4>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+
+<div id="main-body">
+    <form id="login-form" method="POST" autocomplete="on">
+        <h4>Log In:</h4>
+        <label class="form-label">
+            User Name:
+            <input class="form-box" type="text" name="username">
+        </label><br><br><br>
+        <label class="form-label">
+            Password:
+            <input class="form-box" type="password" name="password">
+        </label><br><br><br>
+        <input class="form-submit" type="submit" value="Log In" name="submit">
+    </form>
+
+    <form id="create-account-form" method="POST" autocomplete="off">
+        <h4>Create Account:</h4>
+        <label class="form-label">
+            First Name:
+            <input class="form-box" type="text" name="first_name">
+        </label><br><br><br>
+        <label class="form-label">
+            Last Name:
+            <input class="form-box" type="text" name="last_name">
+        </label><br><br><br>
+        <label class="form-label">
+            User Name:
+            <input class="form-box" type="text" name="username">
+        </label><br><br><br>
+        <label class="form-label">
+            Password:
+            <input class="form-box" type="password" name="password">
+        </label><br><br><br>
+        <input class="form-submit" type="submit" value="Create Account" name="submit">
+    </form>
+</div>
+
+{% endblock %}
