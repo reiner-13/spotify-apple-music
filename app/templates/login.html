@@ -15,38 +15,23 @@
 {% block body %}
 
 <div id="main-body">
-    <form id="login-form" method="POST" autocomplete="on">
-        <h4>Log In:</h4>
-        <label class="form-label">
-            User Name:
-            <input class="form-box" type="text" name="username">
-        </label><br><br><br>
-        <label class="form-label">
-            Password:
-            <input class="form-box" type="password" name="password">
-        </label><br><br><br>
-        <input class="form-submit" type="submit" value="Log In" name="submit">
+    <h4>Log In:</h4>
+    <form method="POST" autocomplete="on" nonvalidate>
+        {{ login_form.hidden_tag() }}
+        <p> {{ login_form.username.label }} {{ login_form.username(size=25) }} </p>
+        <p> {{ login_form.password.label }} {{ login_form.password(size=25) }} </p>
+        <p> {{ login_form.remember_me() }} {{ login_form.remember_me.label }} </p>
+        <p> {{ login_form.submit() }} </p>
     </form>
 
-    <form id="create-account-form" method="POST" autocomplete="off">
-        <h4>Create Account:</h4>
-        <label class="form-label">
-            First Name:
-            <input class="form-box" type="text" name="first_name">
-        </label><br><br><br>
-        <label class="form-label">
-            Last Name:
-            <input class="form-box" type="text" name="last_name">
-        </label><br><br><br>
-        <label class="form-label">
-            User Name:
-            <input class="form-box" type="text" name="username">
-        </label><br><br><br>
-        <label class="form-label">
-            Password:
-            <input class="form-box" type="password" name="password">
-        </label><br><br><br>
-        <input class="form-submit" type="submit" value="Create Account" name="submit">
+    <h4>Create Account:</h4>
+    <form method="POST" autocomplete="off" nonvalidate>
+        {{ create_acc_form.hidden_tag() }}
+        <p> {{ create_acc_form.first_name.label }} {{ create_acc_form.first_name(size=25) }} </p>
+        <p> {{ create_acc_form.last_name.label }} {{ create_acc_form.last_name(size=25) }} </p>
+        <p> {{ create_acc_form.username.label }} {{ create_acc_form.username(size=25) }} </p>
+        <p> {{ create_acc_form.password.label }} {{ create_acc_form.password(size=25) }} </p>
+        <p> {{ create_acc_form.submit() }} </p>
     </form>
 </div>
 

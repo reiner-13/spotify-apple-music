@@ -7,6 +7,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 
 from app import app
+from app.forms import *
 #from user import User
 
 """Database Things"""
@@ -62,33 +63,35 @@ def search_songs(playlist_name):
     return render_template("add_songs.html", playlist_name=playlist_name, search_text=search_text, search_results=search_results)
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login")
 def login():
-    if request.method == 'POST':
-        cursor = mysql.connection.cursor()
-        if request.form["submit"] == "Log In":
-            username = request.form["username"]
-            password = request.form["password"]
-            result = cursor.execute(f"SELECT * FROM users WHERE Username='{username}' AND Password='{password}';")
-            if result > 0:
-                data = cursor.fetchall()
-                user_id = data[0][0]
-                first_name = data[0][1]
-                last_name = data[0][2]
-                username = data[0][3]
-                password = data[0][4]
-                #current_user = User(user_id, first_name, last_name, username, password)
-            else:
-                print("ERROR")
-        elif request.form["submit"] == "Create Account":
-            first_name = request.form["first_name"]
-            last_name = request.form["last_name"]
-            username = request.form["username"]
-            password = request.form["password"]
-            cursor.execute(f"INSERT INTO users (FirstName, LastName, Username, Password) VALUES ('{first_name}', '{last_name}', '{username}', '{password}');")
-            mysql.connection.commit()
-            print("Successfully inserted into DB.")
-    return render_template("login.html")
+    login_form = LoginForm()
+    create_acc_form = CreateAccountForm()
+    cursor = mysql.connection.cursor()
+
+    if login_form.validate_on_submit():
+        username = request.form["username"]
+        password = request.form["password"]
+        result = cursor.execute(f"SELECT * FROM users WHERE Username='{username}' AND Password='{password}';")
+        if result > 0:
+            data = cursor.fetchall()
+            user_id = data[0][0]
+            first_name = data[0][1]
+            last_name = data[0][2]
+            username = data[0][3]
+            password = data[0][4]
+            #current_user = User(user_id, first_name, last_name, username, password)
+        else:
+            print("ERROR")
+    if create_acc_form.validate_on_submit():
+        first_name = request.form["first_name"]
+        last_name = request.form["last_name"]
+        username = request.form["username"]
+        password = request.form["password"]
+        cursor.execute(f"INSERT INTO users (FirstName, LastName, Username, Password) VALUES ('{first_name}', '{last_name}', '{username}', '{password}');")
+        mysql.connection.commit()
+        print("Successfully inserted into DB.")
+    return render_template("login.html", login_form=login_form, create_acc_form=create_acc_form)
 
 
 @app.route("/logout")
