@@ -1,5 +1,7 @@
 flask
-flask-mysqldb
 flask-wtf
+flask-sqlalchemy
+flask-migrate
+
 spotipy
 python-dotenv

@@ -16,14 +16,14 @@
 
 <div id="main-body">
     <h4>Log In:</h4>
-    <form method="POST" autocomplete="on" nonvalidate>
+    <form method="POST" autocomplete="off" nonvalidate>
         {{ login_form.hidden_tag() }}
         <p> {{ login_form.username.label }} {{ login_form.username(size=25) }} </p>
         <p> {{ login_form.password.label }} {{ login_form.password(size=25) }} </p>
         <p> {{ login_form.remember_me() }} {{ login_form.remember_me.label }} </p>
         <p> {{ login_form.submit() }} </p>
     </form>
-
+    
     <h4>Create Account:</h4>
     <form method="POST" autocomplete="off" nonvalidate>
         {{ create_acc_form.hidden_tag() }}

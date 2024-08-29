@@ -65,13 +65,9 @@ def login():
     create_acc_form = CreateAccountForm()
 
     if login_form.validate_on_submit():
-        username = request.form["username"]
-        password = request.form["password"]
+        pass
     if create_acc_form.validate_on_submit():
-        first_name = request.form["first_name"]
-        last_name = request.form["last_name"]
-        username = request.form["username"]
-        password = request.form["password"]
+        pass
     return render_template("login.html", login_form=login_form, create_acc_form=create_acc_form)
 
 
