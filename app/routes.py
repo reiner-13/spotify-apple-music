@@ -8,11 +8,6 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 from app import app
 from app.forms import *
 
-"""Database Things"""
-app.config["MYSQL_HOST"] = os.getenv("MYSQL_HOST")
-app.config["MYSQL_USER"] = os.getenv("MYSQL_USER")
-app.config["MYSQL_PASSWORD"] = os.getenv("MYSQL_PASSWORD")
-app.config["MYSQL_DB"] = os.getenv("MYSQL_DB")
 
 """Spotipy Things"""
 client_id = "7cb865a7264c4d0b9e5b4c6f171582a5"
@@ -29,6 +24,7 @@ sp_oauth = SpotifyOAuth(
     show_dialog=True
 )
 sp = Spotify(auth_manager=sp_oauth)
+
 
 @app.route("/")
 def home():
