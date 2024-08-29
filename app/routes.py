@@ -1,12 +1,14 @@
 import os
 from flask import Flask, session, redirect, url_for, request, render_template, flash
-
+from flask_login import current_user, login_user, logout_user, login_required
+from urllib.parse import urlsplit
+import sqlalchemy as sa
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
-
-from app import app
+from app import app, db
 from app.forms import *
+from app.models import User
 
 
 """Spotipy Things"""
@@ -38,11 +40,13 @@ def callback():
 
 
 @app.route("/profile", methods=['GET', 'POST'])
+@login_required
 def profile():
     return render_template("profile.html")
 
 
 @app.route("/<playlist_name>/search_songs", methods=['GET'])
+@login_required
 def search_songs(playlist_name):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
@@ -57,11 +61,24 @@ def search_songs(playlist_name):
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("profile"))
     login_form = LoginForm()
     create_acc_form = CreateAccountForm()
 
     if login_form.validate_on_submit():
-        pass
+        user = db.session.scalar(
+            sa.select(User).where(User.username == login_form.username.data)
+        )
+        if user is None or not user.check_password(login_form.password.data):
+            flash("Invalid username or password.")
+            return redirect(url_for("login"))
+        login_user(user, remember=login_form.remember_me.data)
+        next_page = request.args.get("next")
+        if not next_page or urlsplit(next_page).netloc != '':
+            next_page = url_for("profile")
+        return redirect(next_page)
+
     if create_acc_form.validate_on_submit():
         pass
     return render_template("login.html", login_form=login_form, create_acc_form=create_acc_form)
@@ -69,5 +86,5 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.clear()
+    logout_user()
     return redirect(url_for("home"))
