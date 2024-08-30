@@ -29,6 +29,7 @@ sp = Spotify(auth_manager=sp_oauth)
 
 
 @app.route("/")
+@app.route("/home")
 def home():
     return render_template("home.html")
 
@@ -80,7 +81,16 @@ def login():
         return redirect(next_page)
 
     if create_acc_form.validate_on_submit():
-        pass
+        user = User(username=create_acc_form.username.data, first_name=create_acc_form.first_name.data, last_name=create_acc_form.last_name.data)
+        user.set_password(create_acc_form.password1.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("Created user account.")
+        login_user(user)
+        next_page = request.args.get("next")
+        if not next_page or urlsplit(next_page).netloc != '':
+            next_page = url_for("profile")
+        return redirect(next_page)
     return render_template("login.html", login_form=login_form, create_acc_form=create_acc_form)
 
 

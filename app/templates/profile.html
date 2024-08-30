@@ -16,8 +16,9 @@
 {% block body %}
 
 <div id="main-body">
+    <h2>Hello, {{ current_user.first_name }}.</h2>
+    <h4>Create New Playlist:</h4>
     <form id="create-playlist-form" method="POST" autocomplete="off">
-        <h4>Create New Playlist:</h4>
         <input class="form-box" type="text" name="playlist_name" placeholder="Name...">
         <input class="text-box-submit" type="image" src="https://cdn.icon-icons.com/icons2/1875/PNG/512/plussquare_120280.png" alt="Create Playlist">
     </form>
