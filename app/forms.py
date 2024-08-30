@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, RadioField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 import sqlalchemy as sa
 from app import db
@@ -17,6 +17,7 @@ class CreateAccountForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password1 = PasswordField("Password", validators=[DataRequired()])
     password2 = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo("password1")])
+    platform = RadioField("Platform", choices=[("spotify", "Spotify"), ("apple", "Apple Music")], render_kw={"class": "no-bullets"})
     submit = SubmitField("Create Account")
 
     def validate_username(self, username):

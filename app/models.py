@@ -11,7 +11,8 @@ class User(UserMixin, db.Model):
     username : so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     first_name : so.Mapped[str] = so.mapped_column(sa.String(64))
     last_name : so.Mapped[str] = so.mapped_column(sa.String(64))
-    password_hash : so.Mapped[Optional[str]] = so.mapped_column(sa.String(265))
+    password_hash : so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+    platform : so.Mapped[Optional[str]] = so.mapped_column(sa.String(32))
 
     playlists : so.Mapped[list["UserPlaylist"]] = so.relationship(
         back_populates="user"

@@ -81,7 +81,7 @@ def login():
         return redirect(next_page)
 
     if create_acc_form.validate_on_submit():
-        user = User(username=create_acc_form.username.data, first_name=create_acc_form.first_name.data, last_name=create_acc_form.last_name.data)
+        user = User(username=create_acc_form.username.data, first_name=create_acc_form.first_name.data, last_name=create_acc_form.last_name.data, platform=create_acc_form.platform.data)
         user.set_password(create_acc_form.password1.data)
         db.session.add(user)
         db.session.commit()

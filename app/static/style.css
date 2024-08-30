@@ -91,3 +91,6 @@ hr {
     font-weight: bold;
     margin: 10px;
 }
+.no-bullets {
+    list-style-type: none;
+}
