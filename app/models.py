@@ -35,8 +35,6 @@ class Playlist(db.Model):
     __tablename__ = "playlist_table"
     id : so.Mapped[int] = so.mapped_column(primary_key=True)
     name : so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
-    spotify_id : so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
-    apple_music_id : so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
 
     users : so.Mapped[list["UserPlaylist"]] = so.relationship(
         back_populates="playlist"
@@ -49,6 +47,7 @@ class UserPlaylist(db.Model):
     __tablename__ = "userplaylist_table"
     user_id : so.Mapped[int] = so.mapped_column(sa.ForeignKey("user_table.id"), primary_key=True)
     playlist_id : so.Mapped[int] = so.mapped_column(sa.ForeignKey("playlist_table.id"), primary_key=True)
+    platform_id : so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
 
     user : so.Mapped["User"] = so.relationship(back_populates="playlists")
     playlist : so.Mapped["Playlist"] = so.relationship(back_populates="users")
