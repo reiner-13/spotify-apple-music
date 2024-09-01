@@ -8,7 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 from app import app, db
 from app.forms import *
-from app.models import User
+from app.models import *
 
 
 """Spotipy Things"""
@@ -37,13 +37,26 @@ def home():
 @app.route("/callback")
 def callback():
     sp_oauth.get_access_token(request.args["code"])
-    return redirect(url_for("home"))
+    return redirect(url_for("profile"))
 
 
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template("profile.html")
+    if current_user.platform == "spotify" and not sp_oauth.validate_token(cache_handler.get_cached_token()):
+        auth_url = sp_oauth.get_authorize_url()
+        return redirect(auth_url)
+    create_playlist_form = CreatePlaylistForm()
+    if create_playlist_form.validate_on_submit():
+        playlist = Playlist(name=create_playlist_form.playlist_name.data)
+        db.session.add(playlist)
+        current_user.platform_username = sp.me()["id"]
+        sp_playlist = sp.user_playlist_create(current_user.platform_username, playlist.name, public=False, collaborative=False, description="SAM Shared Playlist")
+        db.session.commit()
+        user_playlist = UserPlaylist(user_id=current_user.id, playlist_id=playlist.id, platform_id=sp_playlist["id"])
+        db.session.add(user_playlist)
+        db.session.commit()
+    return render_template("profile.html", create_playlist_form=create_playlist_form)
 
 
 @app.route("/<playlist_name>/search_songs", methods=['GET'])

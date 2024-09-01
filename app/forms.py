@@ -27,5 +27,6 @@ class CreateAccountForm(FlaskForm):
         if user is not None:
             raise ValidationError("Please use a different username.")
 
-class AddPlaylistForm(FlaskForm):
-    pass
+class CreatePlaylistForm(FlaskForm):
+    playlist_name = StringField("Playlist Name", validators=[DataRequired()])
+    submit = SubmitField("Create")
