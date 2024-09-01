@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block navbar %}
-<a class="right-navbar" href="{{ url_for('search_songs', playlist_name='Joey\'s Shared Playlist') }}">SETTINGS</a>
+<a class="right-navbar" href="{{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}">SETTINGS</a>
 {% endblock %}
 
 {% block body %}
@@ -43,7 +43,7 @@
                         {% endif %}<br>
                         Track Total: {{ playlists['items'][i]['tracks']['total'] }}<br><br>
                     </p>
-                    <input class="view-button" type="button" value="View"><br><br>
+                    <input class="view-button" onclick="window.location.href='{{ url_for('view', playlist_name=playlists['items'][i]['name'], playlist_id=playlists['items'][i]['id']) }}'" type="button" value="View"><br><br>
                 </div>
                 <hr>
             {% endif %}

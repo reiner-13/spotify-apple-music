@@ -63,9 +63,25 @@ def profile():
     return render_template("profile.html", create_playlist_form=create_playlist_form, playlists=playlists, username=sp.me()["id"])
 
 
-@app.route("/<playlist_name>/search_songs", methods=['GET'])
+@app.route("/<playlist_name>+<playlist_id>/view", methods=['GET'])
+@app.route("/<playlist_name>+<playlist_id>", methods=['GET'])
 @login_required
-def search_songs(playlist_name):
+def view(playlist_name, playlist_id):
+    tracks = get_playlist_tracks(current_user, playlist_id)
+    return render_template("view_playlist.html", playlist_name=playlist_name, tracks=tracks)
+
+
+def get_playlist_tracks(user, playlist_id):
+    if user.platform == "spotify":
+        return sp.user_playlist_tracks(user.platform_username, playlist_id, limit=100)
+    elif user.platform == "apple":
+        return "<apple music playlist>"
+    return "invalid platform"
+
+
+@app.route("/<playlist_name>/add_songs", methods=['GET'])
+@login_required
+def add_songs(playlist_name):
     if not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)

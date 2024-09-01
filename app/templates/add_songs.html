@@ -16,7 +16,7 @@
     <form id="search-songs-form" method="GET" autocomplete="off">
         <h4>Add Songs:</h4>
         <input class="form-box" type="text" name="song_search" placeholder="Search...">
-        <input class="text-box-submit" type="image" href="{{ url_for('search_songs', playlist_name='Joey\'s Shared Playlist') }}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/768px-Search_Icon.svg.png" alt="Search Song">
+        <input class="text-box-submit" type="image" href="{{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/768px-Search_Icon.svg.png" alt="Search Song">
     </form>
     <br><br>
     <h5 id="search-text">Searched: <i>{{ search_text }}</i></h1>
