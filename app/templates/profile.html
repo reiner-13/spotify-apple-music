@@ -23,9 +23,32 @@
         <p> {{ create_playlist_form.playlist_name.label }} {{ create_playlist_form.playlist_name(size=50) }} </p>
         <p> {{ create_playlist_form.submit() }} </p>
     </form>
-    <form id="view-playlists-form" method="GET">
-
-    </form>
+    <div id="view-playlists-form">
+        {% for i in range(playlists['total']) %}
+            {% if playlists['items'][i]['owner']['display_name'] == username %}
+                <div class="playlist-item">
+                    <a class="album-art" href="{{ playlists['items'][i]['external_urls']['spotify'] }}">
+                        {% if playlists['items'][i]['images'] is not none %}
+                            <img src="{{ playlists['items'][i]['images'][0]['url'] }}" alt="{{ playlists['items'][i]['name'] }} playlist image">
+                        {% else %}
+                            <img src="https://www.afrocharts.com/images/song_cover.png" alt="{{ playlists['items'][i]['name'] }} playlist image">
+                        {% endif %}
+                    </a>
+                    <p class="playlist-desc">
+                        <b>{{ playlists['items'][i]['name'] }}</b><br>
+                        {% if playlists['items'][i]['public'] %}
+                        Public
+                        {% else %}
+                        Private
+                        {% endif %}<br>
+                        Track Total: {{ playlists['items'][i]['tracks']['total'] }}<br><br>
+                    </p>
+                    <input class="view-button" type="button" value="View"><br><br>
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
 
     
 </div>

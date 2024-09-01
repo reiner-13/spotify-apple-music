@@ -46,6 +46,7 @@ def profile():
     if current_user.platform == "spotify" and not sp_oauth.validate_token(cache_handler.get_cached_token()):
         auth_url = sp_oauth.get_authorize_url()
         return redirect(auth_url)
+    playlists = sp.user_playlists(sp.me()["id"])
     create_playlist_form = CreatePlaylistForm()
     if create_playlist_form.validate_on_submit():
         playlist = Playlist(name=create_playlist_form.playlist_name.data)
@@ -56,7 +57,10 @@ def profile():
         user_playlist = UserPlaylist(user_id=current_user.id, playlist_id=playlist.id, platform_id=sp_playlist["id"])
         db.session.add(user_playlist)
         db.session.commit()
-    return render_template("profile.html", create_playlist_form=create_playlist_form)
+        return redirect(url_for("profile"))
+    
+
+    return render_template("profile.html", create_playlist_form=create_playlist_form, playlists=playlists, username=sp.me()["id"])
 
 
 @app.route("/<playlist_name>/search_songs", methods=['GET'])
