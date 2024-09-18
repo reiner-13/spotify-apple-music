@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block header %}
+<h1>Profile</h1>
+<h4>Create or edit shared playlists.</h4>
+{% endblock %}
+
+{% block navbar %}
+<a class="right-navbar" href="{{ url_for('add_songs', playlist_name='Joey\'s Shared Playlist') }}">SETTINGS</a>
+{% endblock %}
+
+{% block body %}
+
+<div id="main-body">
+    <h2>Hello, {{ current_user.first_name }}.</h2>
+    <h4>Create New Playlist:</h4>
+    <form method="POST" autocomplete="off" nonvalidate>
+        {{ create_playlist_form.hidden_tag() }}
+        <p> {{ create_playlist_form.playlist_name.label }} {{ create_playlist_form.playlist_name(size=50) }} </p>
+        <p> {{ create_playlist_form.submit() }} </p>
+    </form>
+    <div id="view-playlists-form">
+        {% for i in range(playlists['items']|length) %}
+            {% if playlists['items'][i]['owner'] == username %}
+                <div class="playlist-item">
+                    <a class="album-art" href="{{ playlists['items'][i]['playlist_url'] }}">
+                        {% if playlists['items'][i]['image'] is not none %}
+                            <img src="{{ playlists['items'][i]['image'] }}" alt="{{ playlists['items'][i]['name'] }} playlist image">
+                        {% else %}
+                            <img src="https://www.afrocharts.com/images/song_cover.png" alt="{{ playlists['items'][i]['name'] }} playlist image">
+                        {% endif %}
+                    </a>
+                    <p class="playlist-desc">
+                        <b>{{ playlists['items'][i]['name'] }}</b><br>
+                        {% if playlists['items'][i]['public'] %}
+                        Public
+                        {% else %}
+                        Private
+                        {% endif %}<br>
+                        Track Total: {{ playlists['items'][i]['track_total'] }}<br><br>
+                    </p>
+                    <input onclick="window.location.href='{{ url_for('view', playlist_name=playlists['items'][i]['name'], playlist_id=playlists['items'][i]['playlist_id']) }}'" type="button" value="View">
+                    {% if not playlists['items'][i]['shared'] %}
+                    <input onclick="window.confirm('Are you sure?'); window.location.href='{{ url_for('share', playlist_name=playlists['items'][i]['name'], playlist_id=playlists['items'][i]['playlist_id']) }}'" type="submit" value="Share">
+                    {% endif %}
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    
+</div>
+
+{% endblock %}

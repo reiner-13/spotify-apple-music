@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        {% block title %}
+
+        {% endblock %}
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <div class="header">
+            {% block header %}
+
+            {% endblock %}
+        </div>
+        <div class="navbar">
+            <a href="{{ url_for('home') }}">HOME</a>
+            <a href="{{ url_for('profile') }}">PROFILE</a>
+            {% if current_user.is_anonymous %}
+            <a class="right-navbar" href="{{ url_for('login') }}">LOG IN</a>
+            {% else %}
+            <a class="right-navbar" href="{{ url_for('logout') }}">LOG OUT</a>
+            {% endif %}
+            {% block navbar %}{% endblock %}
+        </div>
+        {% block body %}
+
+        {% endblock %}
+    </body>
+</html>

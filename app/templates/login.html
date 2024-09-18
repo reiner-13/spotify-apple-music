@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Log In</title>
+{% endblock %}
+
+{% block header %}
+<h1>Log In</h1>
+<h4>Enter account information to get started.</h4>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+
+<div id="main-body">
+    <h4>Log In:</h4>
+    <form method="POST" autocomplete="off" nonvalidate>
+        {{ login_form.hidden_tag() }}
+        <p> {{ login_form.username.label }} {{ login_form.username(size=25) }} </p>
+        <p> {{ login_form.password.label }} {{ login_form.password(size=25) }} </p>
+        <p> {{ login_form.remember_me() }} {{ login_form.remember_me.label }} </p>
+        <p> {{ login_form.submit() }} </p>
+    </form>
+    
+    <h4>Create Account:</h4>
+    <form method="POST" autocomplete="off" nonvalidate>
+        {{ create_acc_form.hidden_tag() }}
+        <p> {{ create_acc_form.first_name.label }} {{ create_acc_form.first_name(size=25) }} </p>
+        <p> {{ create_acc_form.last_name.label }} {{ create_acc_form.last_name(size=25) }} </p>
+        <p> {{ create_acc_form.username.label }} {{ create_acc_form.username(size=25) }} </p>
+        <p> {{ create_acc_form.password1.label }} {{ create_acc_form.password1(size=25) }} </p>
+        <p> {{ create_acc_form.password2.label }} {{ create_acc_form.password2(size=25) }} </p>
+        <p> {{ create_acc_form.platform.label }} {{ create_acc_form.platform() }} </p>
+        <p> {{ create_acc_form.submit() }} </p>
+    </form>
+</div>
+
+{% endblock %}

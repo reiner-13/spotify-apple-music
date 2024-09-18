@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>View Playlist</title>
+{% endblock %}
+
+{% block header %}
+<h1>View Playlist</h1>
+<h4>View songs in playlist</h4>
+{% endblock %}
+
+{% block body %}
+<div id="main-body">
+    <h2>{{ playlist_name }}</h2>
+    {% for i in range(tracks['items']|length) %}
+        <div class="song-item">
+            <a class="album-art" href="{{tracks['items'][i]['track_url']}}">
+                <img src="{{ tracks['items'][i]['image'] }}" alt="{{ tracks['items'][i]['name'] }} album cover">
+            </a>
+            <p class="song-desc">
+                <b>Song: </b>{{ tracks['items'][i]['name'] }}<br>
+                <b>Artist(s): </b>
+                {% for j in range(tracks['items'][i]['artists']|length) %}
+                    {% if j + 1 == tracks['items'][i]['artists']|length %}
+                        {{ tracks['items'][i]['artists'][j]['name'] }}<br>
+                    {% else %}
+                    {{ tracks['items'][i]['artists'][j]['name'] }}, 
+                    {% endif %}
+                {% endfor %}
+                <b>Album: </b>{{ tracks['items'][i]['album'] }}
+            </p>
+            <input class="add-button" type="submit" value="Remove">
+        </div>
+        <hr>
+        {% if i == 99 %}
+        <p>...</p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
