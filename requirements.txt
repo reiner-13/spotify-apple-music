@@ -5,4 +5,5 @@ flask-migrate
 flask-login
 
 spotipy
+apple-music-python
 python-dotenv
