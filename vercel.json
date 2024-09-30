@@ -1,3 +1,14 @@
 {
-    "rewrites": [{"source": "/(.*)", "destination": "__init__.py"}]
+    "builds": [
+        {
+            "src": "sam.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "sam.py"
+        }
+    ]
 }
