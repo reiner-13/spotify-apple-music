@@ -6,13 +6,14 @@ import sqlalchemy as sa
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
+from applemusicpy import AppleMusic
 from dotenv import load_dotenv
 from app import app, db
 from app.forms import *
 from app.models import *
 
 
-"""Spotipy Things"""
+# Spotify Things
 load_dotenv()
 client_id = "7cb865a7264c4d0b9e5b4c6f171582a5"
 client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
@@ -28,6 +29,7 @@ sp_oauth = SpotifyOAuth(
     show_dialog=True
 )
 sp = Spotify(auth_manager=sp_oauth)
+
 
 
 @app.route("/")
